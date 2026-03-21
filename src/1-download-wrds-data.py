@@ -59,9 +59,11 @@ data_dir = os.getenv("DATA_DIR")
 # Note: Do NOT put passwords in .env - use keyring for secrets.
 #
 # FIRST TIME SETUP - run these lines once in your Python console:
-#   import keyring
-#   keyring.set_password("wrds", "wrds_user", "your_wrds_username")
-#   keyring.set_password("wrds", "wrds_pw",   "your_wrds_password")
+
+# import keyring
+# keyring.set_password("wrds", "wrds_user", "resilva19")
+# keyring.set_password("wrds", "wrds_pw",   "*Rocknrotos9")
+
 # This stores credentials securely in your system's keychain.
 # You only need to do this once per computer.
 #
