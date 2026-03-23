@@ -20,6 +20,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env file (see script 1 for detailed comments)
 load_dotenv(".env")
 data_dir = os.getenv("DATA_DIR")
+os.makedirs(f"{data_dir}/output", exist_ok=True)
 
 # If the above is too complicated and you don't have coauthors you can just set
 # data_dir manually by commenting out the two lines above and using:
@@ -31,7 +32,7 @@ data_dir = os.getenv("DATA_DIR")
 # Read in the winsorized data.
 # pyreadstat.read_dta() returns a tuple: (DataFrame, metadata).
 # This is the Python equivalent of haven::read_dta().
-regdata, meta = pyreadstat.read_dta(f"{data_dir}/regdata-R.dta")
+regdata, meta = pyreadstat.read_dta(f"{data_dir}/regdata-py.dta")
 regdata = regdata[["gvkey", "datadate", "calyear", "roa", "roa_lead_1",
                    "loss", "at", "mve", "rd", "FF12", "ff12num"]]
 
@@ -61,14 +62,13 @@ plt.rcParams["font.family"] = "serif"
 plt.tight_layout()
 
 # Look at it in Python
-plt.show()
+plt.show(block=False)
 
 # For LaTeX output, save as PDF
 fig.savefig(f"{data_dir}/output/ff12_fig.pdf", bbox_inches="tight")
 
 # For Word output, save as PNG
-fig.savefig(f"{data_dir}/output/ff12_fig.png", dpi=150, bbox_inches="tight",
-            figsize=(4.2, 3.6))
+fig.savefig(f"{data_dir}/output/ff12_fig.png", dpi=150, bbox_inches="tight")
 
 plt.close()
 
@@ -115,7 +115,7 @@ ax.legend(title="Size Quintile")
 plt.tight_layout()
 
 # Look at it in Python
-plt.show()
+plt.show(block=False)
 
 # For LaTeX
 fig.savefig(f"{data_dir}/output/size_year.pdf", bbox_inches="tight")
@@ -215,7 +215,7 @@ ax.legend(title="Loss")
 plt.tight_layout()
 
 # Look at it in Python
-plt.show()
+plt.show(block=False)
 
 # For LaTeX
 fig.savefig(f"{data_dir}/output/coef_year.pdf", bbox_inches="tight")
