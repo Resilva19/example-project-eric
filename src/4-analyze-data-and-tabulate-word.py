@@ -43,7 +43,7 @@ data_dir = os.getenv("DATA_DIR")
 # Read in the winsorized data.
 # I found there are not many firms in the 60s so I am just going to start at 1970.
 # pyreadstat.read_dta() returns a tuple: (DataFrame, metadata object).
-regdata, meta = pyreadstat.read_dta(f"{data_dir}/regdata-R.dta")
+regdata, meta = pyreadstat.read_dta(f"{data_dir}/regdata-py.dta")
 regdata = regdata[["gvkey", "datadate", "calyear", "roa", "roa_lead_1",
                    "loss", "at", "mve", "rd", "FF12", "ff12num"]]
 
@@ -91,7 +91,7 @@ t1 = (
         "Total Firms": f"{len(g):,.0f}",
         "Loss Firms":  f"{int(g['loss'].sum()):,.0f}",
         "Pct. Losses": f"{g['loss'].mean():.2%}",
-    }))
+    }), include_groups=False)
     .reset_index()
 )
 
@@ -174,7 +174,7 @@ def fmt_corr(x):
         return ""
     return f"{x:.3f}"
 
-t3 = corrmatrix.applymap(fmt_corr)
+t3 = corrmatrix.map(fmt_corr)
 
 # Add row labels (variable names) as the first column
 t3.insert(0, " ", t3.index)
@@ -280,8 +280,8 @@ gof_data = []
 for gof_label, getter in [
     ("Year FE",  lambda m: "X" if has_fe(m, "calyear") else ""),
     ("Firm FE",  lambda m: "X" if has_fe(m, "gvkey") else ""),
-    ("N",        lambda m: f"{int(m.nobs):,.0f}"),
-    ("R^2",      lambda m: f"{m.rsquared:.3f}"),
+    ("N",        lambda m: f"{int(m._N):,.0f}"),
+    ("R^2",      lambda m: f"{m._r2:.3f}"),
 ]:
     row = {"term": gof_label}
     for name, m in models.items():

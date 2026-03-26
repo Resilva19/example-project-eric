@@ -63,7 +63,7 @@ display "Using data directory: `data_dir'"
 
 /******************************************************************************/
 *LOAD DATA*
-use "`data_dir'/regdata-sas.dta" , clear
+use "`data_dir'/regdata-py.dta" , clear
 
 
 // NOTE: Because we use projectpaths + doenv to load paths from the .env file,
